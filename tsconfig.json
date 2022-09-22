@@ -1,0 +1,8 @@
+{
+  "include": ["./server/**/*", "./index.ts"],
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "esModuleInterop": true
+  }
+}
