@@ -1,6 +1,7 @@
 {
   "include": ["./server/**/*", "./index.ts"],
   "compilerOptions": {
+    "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "esModuleInterop": true
