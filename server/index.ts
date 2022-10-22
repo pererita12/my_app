@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import mysql from "mysql2";
 import digimonJson from "./resources/digimon.json";
 import {
   connectToDatabase,
