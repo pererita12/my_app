@@ -12,8 +12,12 @@ const createDatabase = () => {
   return new Promise<void>(async (res, rej) => {
     const sql = connectToSQL();
     await executeQuery(sql, `CREATE DATABASE IF NOT EXISTS digimon`);
-    sql.end();
+    res();
   });
+};
+
+const randomNumber = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
 const createTable = () => {
@@ -25,17 +29,24 @@ const createTable = () => {
       id int AUTO_INCREMENT PRIMARY KEY,
       name varchar(255),
       level varchar(255),
-      img varchar(255)
+      img varchar(255),
+      speed int,
+      strength int,
+      magic int,
+      health int
     )`
     );
     for (const digimon of digimonJson) {
+      const health = randomNumber(0, 300);
+      const speed = randomNumber(0, 100);
+      const strength = randomNumber(0, 100);
+      const magic = randomNumber(0, 100);
       await insertRowInDatabaseTable(
         digimonDb,
         "list",
-        `'${digimon.name}', '${digimon.level}', '${digimon.img}'`
+        `'${digimon.name}', '${digimon.level}', '${digimon.img}', ${speed}, ${strength}, ${magic}, ${health}`
       );
     }
-    digimonDb.end();
     res();
   });
 };
@@ -70,7 +81,6 @@ app.get("/api/digimon", async (request, response) => {
   const digimonDb = await connectToDatabase("digimon");
   const data = await executeQuery(digimonDb, `SELECT * FROM list;`);
   response.send(data);
-  response.end();
 });
 
 app.listen(port, () => {

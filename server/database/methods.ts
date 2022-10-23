@@ -12,6 +12,7 @@ export const connectToSQL = () => {
 export const executeQuery = (db: mysql.Connection, query: string) => {
   return new Promise((res, rej) => {
     db.query(query, (error, results) => {
+      if (error) rej(error);
       res(results);
     });
   });
@@ -26,6 +27,7 @@ export const connectToDatabase = (databaseName: string) => {
       database: databaseName,
     });
     db.connect((error) => {
+      if (error) rej(error);
       res(db);
     });
   });
@@ -40,6 +42,7 @@ export const insertRowInDatabaseTable = (
     db.query(
       `INSERT INTO ${tableName} VALUES (0, ${values})`,
       (error, results) => {
+        if (error) rej(error);
         res(results);
       }
     );
